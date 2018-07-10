@@ -26,22 +26,26 @@ use_testthat <- function() {
 #' @param name Test name. if `NULL`, and you're using RStudio, will use
 #'   the name of the file open in the source editor.
 #' @export
-use_test <- function(name = NULL, open = TRUE) {
-  filename <- find_test_filename(name)
+use_test <- function(name = NULL, open = interactive()) {
+  name <- name %||% get_active_r_file(path = "R")
+  name <- paste0("test-", name)
+  name <- slug(name, "R")
 
   if (!uses_testthat()) {
     use_testthat()
   }
 
-  path <- file.path("tests", "testthat", filename)
+  path <- path("tests", "testthat", name)
 
-  if (file.exists(proj_path(path))) {
-    edit_file(proj_path(path))
+  if (file_exists(proj_path(path))) {
+    if (open) {
+      edit_file(proj_path(path))
+    }
   } else {
     use_template(
       "test-example.R",
       path,
-      data = list(test_name = slug(name, "")),
+      data = list(test_name = path_ext_remove(name)),
       open = open
     )
   }
@@ -51,31 +55,9 @@ use_test <- function(name = NULL, open = TRUE) {
 
 uses_testthat <- function(base_path = proj_get()) {
   paths <- c(
-    file.path(base_path, "inst", "tests"),
-    file.path(base_path, "tests", "testthat")
+    path(base_path, "inst", "tests"),
+    path(base_path, "tests", "testthat")
   )
 
-  any(dir.exists(paths))
-}
-
-find_test_filename <- function(name = NULL) {
-  if (!is.null(name)) {
-    return(paste0("test-", slug(name, ".R")))
-  }
-
-  if (!rstudioapi::isAvailable()) {
-    stop("Argument ", code("name"), " is missing, with no default", call. = FALSE)
-  }
-  active_file <- rstudioapi::getSourceEditorContext()$path
-
-  dir <- basename(dirname(active_file))
-  if (dir != "R") {
-    stop("Open file not in `R/` directory", call. = FALSE)
-  }
-
-  if (!grepl("\\.[Rr]$", active_file)) {
-    stop("Open file is does not end in `.R`", call. = FALSE)
-  }
-
-  paste0("test-", basename(active_file))
+  any(dir_exists(paths))
 }

@@ -41,10 +41,8 @@ use_version <- function(which = NULL) {
 
   if (is.null(which)) {
     choice <- utils::menu(
-      choices = paste0(names(versions), " --> ", versions),
-      title = paste0(
-        "Current version is ", ver, "\n", "Which part to increment?"
-      )
+      choices = glue("{names(versions)} --> {versions}"),
+      title = glue("Current version is {ver}.\n", "Which part to increment?")
     )
     which <- names(versions)[choice]
   }
@@ -56,7 +54,7 @@ use_version <- function(which = NULL) {
   git_check_in(
     base_path = proj_get(),
     paths = c("DESCRIPTION", "NEWS.md"),
-    message = "Incrementing version number"
+    message = "Increment version number"
   )
   invisible(TRUE)
 }

@@ -5,11 +5,13 @@
 \alias{proj_set}
 \title{Get and set the active project}
 \usage{
-proj_get()
+proj_get(quiet = FALSE)
 
-proj_set(path = ".", force = FALSE)
+proj_set(path = ".", force = FALSE, quiet = FALSE)
 }
 \arguments{
+\item{quiet}{Logical. Whether to announce project activation.}
+
 \item{path}{Path to set.}
 
 \item{force}{If \code{TRUE}, use this path without checking the usual criteria.
@@ -19,20 +21,21 @@ project-signalling infrastructure, such as initialising a Git repo or
 adding a DESCRIPTION file.}
 }
 \description{
-Most \code{use_*()} functions act on the \strong{active project}. If it is unset,
-usethis uses \href{https://krlmlr.github.io/rprojroot/}{rprojroot} to find the
-project root of the current working directory. It establishes the project
-root by looking for a \code{.here} file, an RStudio Project, a package
+Most \code{use_*()} functions act on the \strong{active project}. If it is
+unset, usethis uses \href{https://rprojroot.r-lib.org}{rprojroot} to
+find the project root of the current working directory. It establishes the
+project root by looking for a \code{.here} file, an RStudio Project, a package
 \code{DESCRIPTION}, Git infrastructure, a \code{remake.yml} file, or a \code{.projectile}
 file. It then stores the active project for use for the remainder of the
-session. If needed, you can manually override by running \code{proj_set()}.
+session. Use \code{proj_get()} to see the active project and \code{proj_set()} to set
+it manually.
 
 In general, user scripts should not call \code{usethis::proj_get()}
 or \code{usethis::proj_set()}. They are internal functions that are exported for
 occasional interactive use. If you need to detect a project
 programmatically in your code, you should probably be using
-\href{https://krlmlr.github.io/rprojroot/}{rprojroot} or its simpler companion,
-\href{https://krlmlr.github.io/here/}{here}, directly.
+\href{https://rprojroot.r-lib.org}{rprojroot} or its simpler companion,
+\href{https://here.r-lib.org}{here}, directly.
 }
 \examples{
 \dontrun{

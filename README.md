@@ -47,7 +47,7 @@ that you’ll need to do some work yourself.
 Below is a quick look at how usethis can help to set up a package.
 
 *Note: usethis is gaining more and more functionality for analytical
-project that are not packages. Stay tuned.*
+projects that are not packages. Stay tuned.*
 
 ``` r
 library(usethis)
@@ -108,14 +108,12 @@ use_readme_md()
 
 use_news_md()
 #> ✔ Writing 'NEWS.md'
-#> ● Edit 'NEWS.md'
 
 use_test("my-test")
 #> ✔ Adding 'testthat' to Suggests field in DESCRIPTION
 #> ✔ Creating 'tests/testthat/'
 #> ✔ Writing 'tests/testthat.R'
 #> ✔ Writing 'tests/testthat/test-my-test.R'
-#> ● Edit 'test-my-test.R'
 
 x <- 1
 y <- 2
@@ -128,9 +126,8 @@ use_data(x, y)
 use_git()
 #> ✔ Initialising Git repo
 #> ✔ Adding '.Rhistory', '.RData', '.Rproj.user' to './.gitignore'
-#> ✔ Adding files and committing
 ```
 
-Please note that this project is released with a [Contributor Code of
-Conduct](.github/CODE_OF_CONDUCT.md). By participating in this project
-you agree to abide by its terms.
+Please note that the usethis project is released with a [Contributor
+Code of Conduct](.github/CODE_OF_CONDUCT.md). By contributing to this
+project, you agree to abide by its terms.
